@@ -132,9 +132,28 @@
         <p>Kelola data mahasiswa dalam sistem akademik</p>
     </div>
 
-    <a href="{{ route('mahasiswa.create') }}" class="btn btn-add">
-        <i class="bi bi-plus-lg"></i> Tambah
-    </a>
+    <div class="d-flex gap-2">
+
+        <a href="{{ route('mahasiswa.export-excel') }}"
+        class="btn btn-success rounded-3">
+        <i class="bi bi-file-earmark-excel"></i>
+        Export Excel
+        </a>
+
+        <a href="{{ route('mahasiswa.print') }}"
+        target="_blank"
+        class="btn btn-danger rounded-3">
+        <i class="bi bi-file-earmark-pdf"></i>
+        Export PDF
+        </a>
+
+        <a href="{{ route('mahasiswa.create') }}"
+           class="btn btn-add">
+            <i class="bi bi-plus-lg"></i>
+            Tambah
+        </a>
+
+    </div>
 </div>
 
 {{-- ALERT --}}
@@ -247,5 +266,4 @@ foreach(\App\Models\Jurusan::all() as $j) {
         {{ $mahasiswas->links('pagination::bootstrap-5') }}
     </div>
 </div>
-
 @endsection

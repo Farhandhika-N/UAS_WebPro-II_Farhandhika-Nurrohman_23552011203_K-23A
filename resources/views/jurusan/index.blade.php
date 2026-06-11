@@ -139,9 +139,27 @@
         <p>Kelola data jurusan dalam sistem akademik</p>
     </div>
 
-    <a href="{{ route('jurusan.create') }}" class="btn btn-add">
-        <i class="bi bi-plus-lg"></i> Tambah
-    </a>
+    <div class="d-flex align-items-center" style="gap:8px;">
+        <a href="{{ route('jurusan.export-excel') }}"
+           class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i>
+            Export Excel
+        </a>
+
+        <a href="{{ route('jurusan.print') }}"
+           target="_blank"
+           class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Export PDF
+        </a>
+
+        <a href="{{ route('jurusan.create') }}"
+           class="btn btn-add">
+            <i class="bi bi-plus-lg"></i>
+            Tambah
+        </a>
+    </div>
+
 </div>
 
 {{-- ALERT --}}

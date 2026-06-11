@@ -137,9 +137,27 @@
         <p>Kelola data matakuliah dalam sistem akademik</p>
     </div>
 
-    <a href="{{ route('matakuliah.create') }}" class="btn btn-add">
-        <i class="bi bi-plus-lg"></i> Tambah
-    </a>
+    <div class="d-flex align-items-center" style="gap:8px;">
+        <a href="{{ route('matakuliah.export-excel') }}"
+           class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i>
+            Export Excel
+        </a>
+
+        <a href="{{ route('matakuliah.print') }}"
+           target="_blank"
+           class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Export PDF
+        </a>
+
+        <a href="{{ route('matakuliah.create') }}"
+           class="btn btn-add">
+            <i class="bi bi-plus-lg"></i>
+            Tambah
+        </a>
+    </div>
+
 </div>
 
 {{-- ALERT --}}

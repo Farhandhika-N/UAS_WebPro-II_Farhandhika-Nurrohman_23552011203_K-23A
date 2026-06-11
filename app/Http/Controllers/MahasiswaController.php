@@ -62,4 +62,64 @@ class MahasiswaController extends Controller
         $mahasiswa->delete();
         return redirect()->route('mahasiswa.index')->with('success', 'Data Mahasiswa berhasil dihapus.');
     }
+
+    // PRINT CSV
+    public function exportCsv()
+    {
+        $fileName = 'mahasiswas.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename={$fileName}",
+        ];
+
+        $callback = function () {
+
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 BOM
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            fputcsv($file, [
+                'ID',
+                'NIM',
+                'Nama',
+                'Jurusan'
+            ]);
+
+            $mahasiswas = Mahasiswa::with('jurusan')->get();
+
+            foreach ($mahasiswas as $item) {
+                fputcsv($file, [
+                    $item->id_mahasiswa,
+                    $item->nim,
+                    $item->nama,
+                    $item->jurusan->nama_jurusan ?? '-',
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    // PRINT PDF
+    public function print()
+    {
+        $mahasiswas = Mahasiswa::with('jurusan')->get();
+
+        return view('mahasiswa.print', compact('mahasiswas'));
+    }
+
+    // PRINT EXCEL
+    public function exportExcel()
+    {
+        $mahasiswas = Mahasiswa::with('jurusan')->get();
+
+        return response()
+            ->view('mahasiswa.excel', compact('mahasiswas'))
+            ->header('Content-Type', 'application/vnd.ms-excel')
+            ->header('Content-Disposition', 'attachment; filename="mahasiswa.xls"');
+    }
 }

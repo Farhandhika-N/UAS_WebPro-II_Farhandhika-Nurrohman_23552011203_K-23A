@@ -50,4 +50,22 @@ class JurusanController extends Controller
         $jurusan->delete();
         return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil dihapus.');
     }
+
+    // PRINT PDF
+    public function print()
+    {
+        $jurusans = Jurusan::all();
+        return view('jurusan.print', compact('jurusans'));
+    }
+
+    // EXPORT EXCEL
+    public function exportExcel()
+    {
+        $jurusans = Jurusan::all();
+
+        return response()
+            ->view('jurusan.excel', compact('jurusans'))
+            ->header('Content-Type', 'application/vnd.ms-excel')
+            ->header('Content-Disposition', 'attachment; filename="jurusan.xls"');
+    }
 }
