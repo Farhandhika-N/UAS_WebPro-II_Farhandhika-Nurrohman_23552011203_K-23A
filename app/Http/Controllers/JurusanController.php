@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use App\Services\ActivityLogger;
 
 class JurusanController extends Controller
 {
@@ -26,6 +27,11 @@ class JurusanController extends Controller
         ]);
 
         Jurusan::create($request->all());
+        ActivityLogger::log(
+            'Menambah Jurusan',
+            'Jurusan',
+            'CREATE'
+        );
         return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
@@ -42,23 +48,31 @@ class JurusanController extends Controller
         ]);
 
         $jurusan->update($request->all());
+        ActivityLogger::log(
+            'Mengupdate Jurusan',
+            'Jurusan',
+            'UPDATE'
+        );
         return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil diperbarui.');
     }
 
     public function destroy(Jurusan $jurusan)
     {
+        ActivityLogger::log(
+            'Menghapus Jurusan',
+            'Jurusan',
+            'DELETE'
+        );
         $jurusan->delete();
         return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil dihapus.');
     }
 
-    // PRINT PDF
     public function print()
     {
         $jurusans = Jurusan::all();
         return view('jurusan.print', compact('jurusans'));
     }
 
-    // EXPORT EXCEL
     public function exportExcel()
     {
         $jurusans = Jurusan::all();

@@ -47,31 +47,38 @@
     background: #3b82f6;
     border: none;
     border-radius: 10px;
-    padding: 10px 18px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 500;
+    transition: 0.2s;
 }
 
 .btn-save:hover {
     background: #2563eb;
+    color: white;
 }
 
 .btn-cancel {
     background: transparent;
-    border: 1px solid #334155;
-    color: #94a3b8;
+    border: 1px solid #475569;
     border-radius: 10px;
-    padding: 10px 18px;
+    padding: 10px 20px;
+    color: #94a3b8;
+    font-weight: 500;
+    transition: 0.2s;
 }
 
 .btn-cancel:hover {
-    background: #1e293b;
+    background: #334155;
     color: white;
+    border-color: #475569;
 }
 </style>
 
 <div class="col-md-6 mx-auto">
 
     <div class="form-header mb-3">
-        <h4>Edit Matakuliah</h4>
+        <h4 class="mb-1"><i class="bi bi-pencil-square me-2 text-primary"></i>Edit Matakuliah</h4>
         <p>Perbarui data matakuliah: <strong>{{ $matakuliah->nama_matakuliah }}</strong></p>
     </div>
 
@@ -128,15 +135,39 @@
                 @enderror
             </div>
 
-            {{-- ACTION --}}
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-save">
-                    <i class="bi bi-save"></i> Update
-                </button>
+            <div class="mb-3">
+                <label>Dosen Pengampu</label>
 
-                <a href="{{ route('matakuliah.index') }}" class="btn btn-cancel">
+                <select
+                name="id_dosen"
+                class="form-select">
+
+                <option value="">-- Pilih Dosen --</option>
+
+                @foreach($dosens as $d)
+
+                <option
+                value="{{ $d->id_dosen }}"
+                {{ old('id_dosen',$matakuliah->id_dosen)==$d->id_dosen?'selected':'' }}>
+
+                {{ $d->nama_dosen }}
+
+                </option>
+
+                @endforeach
+
+                </select>
+
+            </div>
+
+            {{-- ACTION --}}
+            <div class="d-flex justify-content-end gap-2 border-top border-secondary pt-3">
+                <a href="{{ route('matakuliah.index') }}" class="btn btn-cancel d-flex align-items-center">
                     Batal
                 </a>
+                <button type="submit" class="btn btn-save d-flex align-items-center">
+                    <i class="bi bi-arrow-clockwise me-2"></i> Perbarui Data
+                </button>
             </div>
 
         </form>

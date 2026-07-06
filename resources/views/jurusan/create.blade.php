@@ -122,7 +122,6 @@
                 <a href="{{ route('jurusan.index') }}" class="btn btn-cancel">
                     Batal
                 </a>
-            </div>
 
         </form>
 

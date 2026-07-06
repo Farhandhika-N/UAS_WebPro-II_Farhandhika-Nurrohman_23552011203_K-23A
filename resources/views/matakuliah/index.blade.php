@@ -3,9 +3,15 @@
 @section('content')
 
 <style>
+body {
+    background: #0f172a;
+    font-family: 'Inter', sans-serif;
+}
+
 /* HEADER */
 .page-header h4 {
-    font-weight: 600;
+    font-weight: 700;
+    color: #fff;
 }
 
 .page-header p {
@@ -18,7 +24,7 @@
     background: #1e293b;
     border-radius: 16px;
     border: 1px solid #334155;
-    padding: 20px;
+    padding: 24px;
 }
 
 /* TABLE */
@@ -31,8 +37,9 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     color: #94a3b8;
-    border-bottom: 1px solid #334155;
-    padding: 12px;
+    border-bottom: 2px solid #334155;
+    padding: 14px 12px;
+    letter-spacing: 0.5px;
 }
 
 .table-custom td {
@@ -41,7 +48,7 @@
 }
 
 .table-custom tbody tr:hover {
-    background: #273449;
+    background: #243146;
 }
 
 /* BADGE */
@@ -69,10 +76,12 @@
     border: none;
     border-radius: 10px;
     padding: 8px 16px;
+    color: white;
 }
 
 .btn-add:hover {
     background: #2563eb;
+    color: white;
 }
 
 /* ACTION */
@@ -100,6 +109,7 @@
     background: #2563eb;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+    color: white;
 }
 
 .btn-delete {
@@ -112,6 +122,7 @@
     background: #dc2626;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+    color: white;
 }
 
 /* SEARCH */
@@ -120,6 +131,13 @@
     border: 1px solid #334155;
     color: white;
     border-radius: 10px;
+}
+
+.search-box:focus {
+    background: #020617;
+    color: white;
+    border-color: #3b82f6;
+    box-shadow: none;
 }
 
 /* EMPTY */
@@ -138,43 +156,40 @@
     </div>
 
     <div class="d-flex align-items-center" style="gap:8px;">
-        <a href="{{ route('matakuliah.export-excel') }}"
-           class="btn btn-success">
-            <i class="bi bi-file-earmark-excel"></i>
-            Export Excel
+        <a href="{{ route('matakuliah.export-excel') }}" class="btn btn-success">
+            <i class="bi bi-file-earmark-excel"></i> Export Excel
         </a>
 
-        <a href="{{ route('matakuliah.print') }}"
-           target="_blank"
-           class="btn btn-danger">
-            <i class="bi bi-file-earmark-pdf"></i>
-            Export PDF
+        <a href="{{ route('matakuliah.print') }}" target="_blank" class="btn btn-danger">
+            <i class="bi bi-file-earmark-pdf"></i> Export PDF
         </a>
 
-        <a href="{{ route('matakuliah.create') }}"
-           class="btn btn-add">
-            <i class="bi bi-plus-lg"></i>
-            Tambah
+        <a href="{{ route('matakuliah.create') }}" class="btn btn-add">
+            <i class="bi bi-plus-lg"></i> Tambah Matakuliah
         </a>
     </div>
-
 </div>
 
 {{-- ALERT --}}
 @if(session('success'))
-    <div class="mb-3 text-success small">
-        ✔ {{ session('success') }}
+    <div class="alert alert-success border-0 mb-4" style="border-radius: 12px; background-color: rgba(16, 185, 129, 0.2) !important; color: #34d399 !important;">
+        <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
     </div>
 @endif
 
-{{-- SEARCH --}}
-<form method="GET" class="mb-3 d-flex gap-2">
+{{-- SEARCH SYSTEM (Diselaraskan ukurannya dengan form pencarian data dosen & mahasiswa) --}}
+<form method="GET" class="mb-4 d-flex gap-2" style="max-width: 450px; width: 100%;">
     <input type="text" name="search"
         value="{{ request('search') }}"
         class="form-control search-box"
-        placeholder="Cari matakuliah...">
+        placeholder="Cari matakuliah..."
+        style="padding: 5px 12px; font-size: 0.9rem;">
 
-    <button class="btn btn-add">Cari</button>
+    <button type="submit" class="btn btn-add text-nowrap d-inline-flex align-items-center justify-content-center gap-2"
+        style="padding: 5px 16px !important; font-size: 0.9rem; border-radius: 10px;">
+        <i class="bi bi-search"></i> 
+        <span>Cari</span>
+    </button>
 </form>
 
 {{-- MAPPING WARNA --}}
@@ -201,65 +216,67 @@ foreach(\App\Models\Jurusan::all() as $j){
 {{-- TABLE --}}
 <div class="card-table">
     <div class="table-responsive">
-        <table class="table-custom">
+        <table class="table-custom align-middle">
             <thead>
                 <tr>
                     <th width="60">No</th>
                     <th>Nama Matakuliah</th>
                     <th>SKS</th>
                     <th>Jurusan</th>
-                    <th width="200">Aksi</th>
+                    <th>Dosen</th>
+                    <th width="200" class="text-center">Aksi</th>
                 </tr>
             </thead>
 
             <tbody>
                 @forelse($matakuliahs as $index => $mk)
                 <tr>
-                    <td>{{ $matakuliahs->firstItem() + $index }}</td>
+                    <td class="text-light-muted small">{{ $matakuliahs->firstItem() + $index }}</td>
 
-                    <td class="fw-semibold">
+                    <td class="fw-semibold text-white">
                         {{ $mk->nama_matakuliah }}
                     </td>
 
                     <td>
-                        <span class="badge-sks">
+                        <span class="badge-sks text-nowrap">
                             {{ $mk->sks }} SKS
                         </span>
                     </td>
 
                     <td>
-                        <span class="badge-jurusan"
+                        <span class="badge-jurusan text-nowrap"
                               style="background: {{ $jurusanColors[$mk->id_jurusan] ?? '#64748b' }}">
                             {{ $mk->jurusan->nama_jurusan }}
                         </span>
                     </td>
 
-                    <td>
-                        <div class="d-flex gap-2">
+                    <td class="text-nowrap text-light-muted small">
+                        {{ $mk->dosen ? $mk->dosen->nama_dosen : 'Tidak ada dosen' }}
+                    </td>
 
+                    <td>
+                        <div class="d-flex gap-2 justify-content-center">
                             <a href="{{ route('matakuliah.edit', $mk->id_matakuliah) }}"
-                               class="btn btn-action btn-edit">
+                               class="btn btn-action btn-edit text-nowrap">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
 
-                            <form action="{{ route('matakuliah.destroy', $mk->id_matakuliah) }}" method="POST">
+                            <form action="{{ route('matakuliah.destroy', $mk->id_matakuliah) }}" method="POST" class="delete-form d-inline">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-action btn-delete"
-                                    onclick="return confirm('Yakin ingin menghapus?')">
+                                <button class="btn btn-action btn-delete text-nowrap">
                                     <i class="bi bi-trash"></i> Hapus
                                 </button>
                             </form>
-
                         </div>
                     </td>
                 </tr>
 
                 @empty
                 <tr>
-                    <td colspan="5">
-                        <div class="empty-state">
-                            <i class="bi bi-journal-bookmark fs-1"></i>
-                            <p class="mt-2">Data matakuliah belum tersedia</p>
+                    <td colspan="6">
+                        <div class="empty-state py-5">
+                            <i class="bi bi-journal-bookmark fs-1 d-block mb-2 text-muted"></i>
+                            <p class="mb-0">Data matakuliah belum tersedia</p>
                         </div>
                     </td>
                 </tr>
@@ -269,9 +286,11 @@ foreach(\App\Models\Jurusan::all() as $j){
     </div>
 
     {{-- PAGINATION --}}
+    @if($matakuliahs->hasPages())
     <div class="mt-4 d-flex justify-content-end">
-        {{ $matakuliahs->links('pagination::bootstrap-5') }}
+        {{ $matakuliahs->withQueryString()->links('pagination::bootstrap-5') }}
     </div>
+    @endif
 </div>
 
 @endsection

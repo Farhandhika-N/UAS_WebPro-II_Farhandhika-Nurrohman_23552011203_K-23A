@@ -78,10 +78,12 @@
     border: none;
     border-radius: 10px;
     padding: 8px 16px;
+    color: white;
 }
 
 .btn-add:hover {
     background: #2563eb;
+    color: white;
 }
 
 .btn-action {
@@ -156,7 +158,7 @@
         <a href="{{ route('jurusan.create') }}"
            class="btn btn-add">
             <i class="bi bi-plus-lg"></i>
-            Tambah
+            Tambah Jurusan
         </a>
     </div>
 
@@ -210,10 +212,9 @@
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
 
-                            <form action="{{ route('jurusan.destroy', $j->id_jurusan) }}" method="POST">
+                            <form action="{{ route('jurusan.destroy', $j->id_jurusan) }}" method="POST"class="delete-form d-inline">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-action btn-delete"
-                                    onclick="return confirm('Yakin ingin menghapus?')">
+                                <button class="btn btn-action btn-delete">
                                     <i class="bi bi-trash"></i> Hapus
                                 </button>
                             </form>

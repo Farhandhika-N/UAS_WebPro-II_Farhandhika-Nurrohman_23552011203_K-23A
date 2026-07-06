@@ -2,22 +2,25 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | Sistem Akademik</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         body {
             background: radial-gradient(circle at top left, #1e293b, #0f172a);
-            height: 100vh;
+            min-height: 100vh; 
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Inter', sans-serif;
             color: white;
+            padding: 20px; 
         }
         .login-card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 40px;
@@ -25,6 +28,13 @@
             max-width: 420px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+        }
+
         .form-control {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid #334155;
@@ -49,6 +59,15 @@
             padding: 12px;
             font-weight: 600;
             border-radius: 10px;
+            transition: 0.3s;
+        }
+        .btn-login:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .text-danger {
+            font-size: 0.85rem;
+            color: #fb7185 !important;
         }
     </style>
 </head>
@@ -64,13 +83,13 @@
         <div class="mb-3 text-start">
             <label class="text-secondary small mb-1">Nama Lengkap</label>
             <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" required autofocus>
-            @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+            @error('name') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
         </div>
 
         <div class="mb-3 text-start">
             <label class="text-secondary small mb-1">Email Address</label>
             <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" required>
-            @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+            @error('email') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
         </div>
 
         <div class="mb-3 text-start">
@@ -81,7 +100,7 @@
                     <i class="bi bi-eye-slash" id="eye-reg"></i>
                 </span>
             </div>
-            @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+            @error('password') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
         </div>
 
         <div class="mb-4 text-start">

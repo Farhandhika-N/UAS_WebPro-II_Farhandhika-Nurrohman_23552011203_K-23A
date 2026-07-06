@@ -110,6 +110,65 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <label class="form-label text-secondary small">
+                    Jenis Kelamin
+                </label>
+
+                <select
+                    name="jenis_kelamin"
+                    class="form-select">
+
+                    <option value="">Pilih</option>
+
+                    <option value="L"
+                        {{ old('jenis_kelamin')=='L'?'selected':'' }}>
+                        Laki-laki
+                    </option>
+
+                    <option value="P"
+                        {{ old('jenis_kelamin')=='P'?'selected':'' }}>
+                        Perempuan
+                    </option>
+
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small">
+                Alamat
+                </label>
+
+                <textarea
+                name="alamat"
+                class="form-control"
+                rows="3">{{ old('alamat') }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small">
+                No HP
+                </label>
+
+                <input
+                type="text"
+                name="no_hp"
+                value="{{ old('no_hp') }}"
+                class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small">
+                Angkatan
+                </label>
+
+                <input
+                type="number"
+                name="angkatan"
+                value="{{ old('angkatan') }}"
+                class="form-control">
+            </div>
+
             {{-- JURUSAN --}}
             <div class="mb-4">
                 <label class="form-label text-secondary small">Jurusan</label>

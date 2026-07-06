@@ -133,6 +133,30 @@
                 @enderror
             </div>
 
+           <div class="mb-3">
+                <label>Dosen Pengampu</label>
+
+                <select
+                    name="id_dosen"
+                    class="form-select">
+
+                    <option value="">-- Pilih Dosen --</option>
+
+                    @foreach($dosens as $d)
+
+                    <option
+                        value="{{ $d->id_dosen }}"
+                        {{ old('id_dosen')==$d->id_dosen?'selected':'' }}>
+
+                        {{ $d->nama_dosen }}
+
+                    </option>
+
+                    @endforeach
+
+                </select>
+            </div> 
+
             {{-- ACTION --}}
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-save">
@@ -142,7 +166,6 @@
                 <a href="{{ route('matakuliah.index') }}" class="btn btn-cancel">
                     Batal
                 </a>
-            </div>
 
         </form>
 
